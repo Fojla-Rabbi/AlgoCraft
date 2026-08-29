@@ -1,21 +1,22 @@
+// These are the default seed values, loaded into the admin-editable store (see storage.js) the first time the site runs.
 // AlgoCraft — levels and lesson content
 
-const LEVELS = {
-  1: { name: "Level 1", label: "Foundations", tier: "Beginner",
+const SEED_LEVELS = {
+  1: { name: "Level 1", label: "Foundations", tier: "Beginner", image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=900&q=80",
        topics: ["time-complexity","arrays-strings","binary-search","two-pointers","sliding-window"] },
-  2: { name: "Level 2", label: "Data Structures I", tier: "Beginner",
+  2: { name: "Level 2", label: "Data Structures I", tier: "Beginner", image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=900&q=80",
        topics: ["stacks-queues","linked-lists","hashing","prefix-sums"] },
-  3: { name: "Level 3", label: "Recursion & Trees", tier: "Intermediate",
+  3: { name: "Level 3", label: "Recursion & Trees", tier: "Intermediate", image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=900&q=80",
        topics: ["recursion-backtracking","trees-bst","tree-traversal","binary-search-on-answer"] },
-  4: { name: "Level 4", label: "Graphs", tier: "Intermediate",
+  4: { name: "Level 4", label: "Graphs", tier: "Intermediate", image: "https://images.unsplash.com/photo-1526379095098-d400fd0bf935?auto=format&fit=crop&w=900&q=80",
        topics: ["graph-traversal","shortest-paths","union-find","topological-sort"] },
-  5: { name: "Level 5", label: "Dynamic Programming", tier: "Advanced",
+  5: { name: "Level 5", label: "Dynamic Programming", tier: "Advanced", image: "https://images.unsplash.com/photo-1509475826633-fed577a2c71b?auto=format&fit=crop&w=900&q=80",
        topics: ["dp-basics","knapsack","dp-subsequences","bitmask-dp"] },
-  6: { name: "Level 6", label: "Advanced Topics", tier: "Advanced",
+  6: { name: "Level 6", label: "Advanced Topics", tier: "Advanced", image: "https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?auto=format&fit=crop&w=900&q=80",
        topics: ["number-theory","combinatorics-probability","bit-manipulation","segment-trees"] }
 };
 
-const TOPICS = {
+const SEED_TOPICS = {
 
   "time-complexity": { title: "Time Complexity", level: 1,
     intro: "Time complexity measures how the running time of an algorithm grows as the input size grows. In competitive programming it's the first filter you apply to any idea, before you write a single line of code.",
