@@ -96,7 +96,7 @@ header.scrolled { background: rgba(91,7,18,.97); box-shadow: 0 8px 30px rgba(0,0
 .learn-topbar { border-bottom:1px solid #eee3da; background:#fff; }
 .learn-topbar .brand-name { font-family:'Playfair Display',serif; font-weight:700; letter-spacing:.1em; color:#4b191b; font-size:19px; }
 .learn-topbar .brand-tag { font-size:9px; letter-spacing:.3em; color:#a0792d; }
-.back-link { display:inline-flex; align-items:center; gap:8px; color:#8b1622; font-size:12px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; }
+.back-link { display:inline-flex; align-items:center; gap:8px; color:#8b1622; font-size:12px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; background:none; border:none; padding:0; cursor:pointer; }
 .back-link:hover { color:#d9a441; }
 .level-hero { background:linear-gradient(110deg,#4a0610,#7c111e); border-radius:26px; padding:46px 40px; color:#fff; }
 .level-hero .eyebrow { color:#f0c26b; }
@@ -116,6 +116,7 @@ header.scrolled { background: rgba(91,7,18,.97); box-shadow: 0 8px 30px rgba(0,0
 .lesson-section h2 { font-family:'Playfair Display',serif; font-size:24px; color:#4b191b; }
 .lesson-section p, .lesson-section pre { margin-top:12px; color:#6b5b56; line-height:1.85; font-size:15px; }
 .lesson-section pre { background:#211110; color:#f3d999; padding:16px 18px; border-radius:12px; overflow-x:auto; font-size:13px; line-height:1.7; }
+.code-lang { display:block; color:#d9a441; font-size:10px; font-weight:800; letter-spacing:.15em; text-transform:uppercase; margin-bottom:8px; }
 .toc-title { color:#a0792d; font-size:10px; font-weight:800; letter-spacing:.2em; text-transform:uppercase; }
 .toc-link { display:block; padding:8px 0 8px 14px; border-left:2px solid #eadfd5; color:#8b7d78; font-size:13px; transition:.2s; }
 .toc-link:hover { color:#8b1622; }
@@ -169,6 +170,15 @@ header.scrolled { background: rgba(91,7,18,.97); box-shadow: 0 8px 30px rgba(0,0
 .dash-panel h2 { font-size:32px; margin-top:8px; }
 .dash-panel p { margin-top:10px; color:#8c7e78; font-size:13px; line-height:1.8; max-width:750px; }
 .dash-panel.large { min-height:340px; }
+.admin-row { display:flex; align-items:center; gap:14px; border:1px solid #eadfd5; border-radius:14px; padding:6px 8px 6px 4px; background:#fffdfa; }
+.admin-row-main { flex:1; text-align:left; padding:12px 14px; border-radius:10px; }
+.admin-row-main:hover { background:#faf1e2; }
+.admin-row-main b { display:block; color:#4b191b; font-family:'Playfair Display',serif; font-size:16px; }
+.admin-row-main span { display:block; margin-top:3px; color:#8c7e78; font-size:12px; }
+.admin-row-actions { display:flex; gap:4px; padding-right:6px; }
+.admin-row-actions button { width:34px; height:34px; border-radius:9px; border:1px solid #eadfd5; background:#fff; color:#8b7d78; font-size:14px; }
+.admin-row-actions button:hover { border-color:#d9a441; color:#8b1622; }
+.admin-row--section { align-items:flex-start; }
 .panel-icon { width:52px; height:52px; display:grid; place-items:center; border-radius:50%; background:#f8e7c4; color:#79101b; font-size:22px; }
 .demo-table { margin-top:25px; border-top:1px solid #eee3da; }
 .demo-table div { display:flex; justify-content:space-between; gap:20px; padding:15px 0; border-bottom:1px solid #eee3da; font-size:12px; }

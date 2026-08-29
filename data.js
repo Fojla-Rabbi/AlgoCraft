@@ -1,6 +1,7 @@
+// These are the default seed values, loaded into the admin-editable store (see storage.js) the first time the site runs.
 // AlgoCraft — levels and lesson content
 
-const LEVELS = {
+const SEED_LEVELS = {
   1: { name: "Level 1", label: "Foundations", tier: "Beginner",
        topics: ["time-complexity","arrays-strings","binary-search","two-pointers","sliding-window"] },
   2: { name: "Level 2", label: "Data Structures I", tier: "Beginner",
@@ -15,7 +16,7 @@ const LEVELS = {
        topics: ["number-theory","combinatorics-probability","bit-manipulation","segment-trees"] }
 };
 
-const TOPICS = {
+const SEED_TOPICS = {
 
   "time-complexity": { title: "Time Complexity", level: 1,
     intro: "Time complexity measures how the running time of an algorithm grows as the input size grows. In competitive programming it's the first filter you apply to any idea, before you write a single line of code.",
