@@ -50,19 +50,24 @@
 
       <div id="navLinks" class="hidden items-center gap-7 lg:flex">
         <a class="nav-link active" href="#home">Home</a>
+        <a class="nav-link" href="#about">About</a>
+        <a class="nav-link" href="#departments">Departments</a>
         <a class="nav-link" href="#programs">Programs</a>
+        <a class="nav-link" href="#events">Events</a>
+        <a class="nav-link" href="#student-portal">Student Portal</a>
         <a class="nav-link" href="#contact">Contact</a>
       </div>
 
       <button class="hidden rounded-full border border-gold px-5 py-2 text-sm font-semibold text-gold transition hover:bg-gold hover:text-wine lg:block" onclick="openLogin()">
-        ♙ &nbsp; ADMIN LOGIN
+        ♙ &nbsp; LOGIN
       </button>
       <button id="menuBtn" class="rounded-lg border border-white/20 px-3 py-2 text-white lg:hidden">☰</button>
     </nav>
 
     <div id="mobileMenu" class="hidden border-t border-white/10 bg-wine/95 px-6 py-5 lg:hidden">
       <div class="flex flex-col gap-4">
-        <a href="#home">Home</a><a href="#programs">Programs</a><a href="#contact">Contact</a>
+        <a href="#home">Home</a><a href="#about">About</a><a href="#departments">Departments</a>
+        <a href="#programs">Programs</a><a href="#events">Events</a><a href="#student-portal">Student Portal</a><a href="#contact">Contact</a>
         <button onclick="openLogin()" class="mt-2 rounded-full border border-gold py-2 text-gold">Login</button>
       </div>
     </div>
@@ -79,19 +84,19 @@
         <div class="max-w-2xl">
           <p class="mb-5 text-sm font-semibold uppercase tracking-[.35em] text-gold">Welcome to AlgoCraft</p>
           <h1 class="font-display text-5xl font-semibold leading-[1.04] text-white sm:text-6xl lg:text-8xl">
-            Master <span class="gold-text">Algorithms.</span><br>
-            Solve <span class="gold-text">Better.</span>
+            Preserving <span class="gold-text">Culture.</span><br>
+            Inspiring <span class="gold-text">Talent.</span>
           </h1>
           <p class="mt-7 max-w-xl text-lg leading-8 text-white/80">
-            A focused competitive programming learning platform — where you build strong fundamentals, learn powerful patterns and solve problems with confidence.
+            A vibrant home for music, dance, arts and cultural learning — where tradition meets creativity and every student finds their stage.
           </p>
           <div class="mt-9 flex flex-wrap gap-4">
             <a href="#programs" class="gold-btn">Explore Programs <span>→</span></a>
-            <a href="#programs" class="outline-btn">Start Learning</a>
+            <a href="#student-portal" class="outline-btn">Join AlgoCraft</a>
           </div>
           <div class="mt-12 flex items-center gap-4 text-sm text-white/60">
             <span class="h-px w-12 bg-gold"></span>
-            Learn. Practice. Solve. Improve.
+            Learn. Perform. Preserve. Inspire.
           </div>
         </div>
       </div>
@@ -105,7 +110,14 @@
           <p class="eyebrow">Learn With Us</p>
           <h2 class="section-title">Featured <em>Programs</em></h2>
         </div>
-        <div id="programGrid" class="mt-12 grid gap-7 md:grid-cols-2 lg:grid-cols-3"></div>
+        <div class="mt-12 grid gap-7 md:grid-cols-2 lg:grid-cols-3">
+          <article class="program-card"><div class="program-img bg-[url('https://images.unsplash.com/photo-1524650359799-842906ca1c06?auto=format&fit=crop&w=900&q=80')]"></div><div class="p-6"><span class="tag">LEVEL 1</span><p class="mt-4 text-sm leading-7 text-stone-600">Time Complexity, Arrays &amp; Strings, Binary Search, Two Pointers, Sliding Window</p><div class="program-meta"><span>5 Topics</span><span>Beginner</span></div><button onclick="window.location.href='level.html?level=1'">View Details →</button></div></article>
+          <article class="program-card"><div class="program-img bg-[url('https://images.unsplash.com/photo-1504609813442-a8924e83f76e?auto=format&fit=crop&w=900&q=80')]"></div><div class="p-6"><span class="tag">LEVEL 2</span><p class="mt-4 text-sm leading-7 text-stone-600">Stacks &amp; Queues, Linked Lists, Hashing, Prefix Sums</p><div class="program-meta"><span>4 Topics</span><span>Beginner</span></div><button onclick="window.location.href='level.html?level=2'">View Details →</button></div></article>
+          <article class="program-card"><div class="program-img bg-[url('https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=900&q=80')]"></div><div class="p-6"><span class="tag">LEVEL 3</span><p class="mt-4 text-sm leading-7 text-stone-600">Recursion &amp; Backtracking, Trees &amp; BST, Tree Traversal, Binary Search on Answer</p><div class="program-meta"><span>4 Topics</span><span>Intermediate</span></div><button onclick="window.location.href='level.html?level=3'">View Details →</button></div></article>
+          <article class="program-card"><div class="program-img bg-[url('https://images.unsplash.com/photo-1508700929628-666bc8bd84ea?auto=format&fit=crop&w=900&q=80')]"></div><div class="p-6"><span class="tag">LEVEL 4</span><p class="mt-4 text-sm leading-7 text-stone-600">Graph Traversal, Shortest Paths, Union-Find (DSU), Topological Sort</p><div class="program-meta"><span>4 Topics</span><span>Intermediate</span></div><button onclick="window.location.href='level.html?level=4'">View Details →</button></div></article>
+          <article class="program-card"><div class="program-img bg-[url('https://images.unsplash.com/photo-1503095396549-807759245b35?auto=format&fit=crop&w=900&q=80')]"></div><div class="p-6"><span class="tag">LEVEL 5</span><p class="mt-4 text-sm leading-7 text-stone-600">DP Basics, Knapsack, DP on Subsequences, Bitmask DP</p><div class="program-meta"><span>4 Topics</span><span>Advanced</span></div><button onclick="window.location.href='level.html?level=5'">View Details →</button></div></article>
+          <article class="program-card"><div class="program-img bg-[url('https://images.unsplash.com/photo-1549490349-8643362247b5?auto=format&fit=crop&w=900&q=80')]"></div><div class="p-6"><span class="tag">LEVEL 6</span><p class="mt-4 text-sm leading-7 text-stone-600">Number Theory, Combinatorics &amp; Probability, Bit Manipulation, Segment Trees</p><div class="program-meta"><span>4 Topics</span><span>Advanced</span></div><button onclick="window.location.href='level.html?level=6'">View Details →</button></div></article>
+        </div>
         <div class="mt-10 text-center"><button class="text-sm font-bold uppercase tracking-widest text-wine hover:text-gold">View all programs →</button></div>
       </div>
     </section>
@@ -117,36 +129,69 @@
     <div class="mx-auto grid max-w-7xl gap-10 px-5 py-16 md:grid-cols-2 lg:grid-cols-4 lg:px-8">
       <div>
         <div class="font-display text-2xl tracking-[.12em]">ALGOCRAFT</div>
-        <div class="mt-1 text-[9px] tracking-[.4em] text-gold">COMPETITIVE PROGRAMMING</div>
-        <p class="mt-5 leading-7 text-white/55">A structured learning platform for competitive programming, algorithms and problem-solving.</p>
+        <div class="mt-1 text-[9px] tracking-[.4em] text-gold">A CULTURAL ACADEMY</div>
+        <p class="mt-5 leading-7 text-white/55">A home for artistic expression, cultural heritage and the next generation of performers.</p>
       </div>
-      <div><h4 class="footer-title">Quick Links</h4><div class="footer-links"><a href="#programs">Programs</a><a href="#programs">Learning Path</a><a href="admin.html">Admin</a></div></div>
+      <div><h4 class="footer-title">Quick Links</h4><div class="footer-links"><a href="#about">About Us</a><a href="#departments">Departments</a><a href="#programs">Programs</a><a href="#events">Events</a><a href="#student-portal">Student Portal</a></div></div>
       <div><h4 class="footer-title">Contact Us</h4><div class="space-y-3 text-sm text-white/55"><p>📍 AlgoCraft, Dhaka, Bangladesh</p><p>☎ +880 98765 43210</p><p>✉ info@algocraft.dev</p><p>◷ Sun – Thu: 9:00 AM – 6:00 PM</p></div></div>
-      <div><h4 class="footer-title">Stay Connected</h4><p class="text-sm leading-6 text-white/55">Get updates about new learning programs, topics and lessons.</p><form id="newsletter" class="mt-5 flex"><input type="email" required placeholder="Your email" class="min-w-0 flex-1 rounded-l-lg bg-white px-4 py-3 text-sm text-black outline-none"><button class="rounded-r-lg bg-gold px-4 font-bold text-wine">→</button></form></div>
+      <div><h4 class="footer-title">Stay Connected</h4><p class="text-sm leading-6 text-white/55">Get updates about programs, events and student showcases.</p><form id="newsletter" class="mt-5 flex"><input type="email" required placeholder="Your email" class="min-w-0 flex-1 rounded-l-lg bg-white px-4 py-3 text-sm text-black outline-none"><button class="rounded-r-lg bg-gold px-4 font-bold text-wine">→</button></form></div>
     </div>
     <div class="border-t border-white/10 py-5 text-center text-xs text-white/40">© 2026 AlgoCraft. All rights reserved.</div>
   </footer>
 
-  <!-- ADMIN LOGIN -->
+  <!-- AUTHENTICATION -->
   <div id="loginModal" class="modal hidden">
     <div class="modal-card auth-card">
       <button onclick="closeLogin()" class="absolute right-5 top-4 text-2xl text-stone-400 hover:text-wine">×</button>
-      <p class="eyebrow">AlgoCraft Admin</p>
-      <h2 class="font-display text-3xl font-semibold text-wine">Administrator Login</h2>
-      <p class="mt-2 text-sm text-stone-500">Sign in to manage programs, banners, topics and learning content.</p>
-      <form id="loginForm" class="mt-7 space-y-4">
-        <input id="loginId" required type="email" autocomplete="username" placeholder="Admin email" class="form-input">
-        <input id="loginPassword" required type="password" autocomplete="current-password" placeholder="Password" class="form-input">
-        <button class="gold-btn w-full justify-center">Sign In to Admin</button>
-      </form>
-      <p class="mt-5 text-center text-xs text-stone-400">Administrator access only. Student and teacher accounts are not available in this system.</p>
+      <div id="authLoginView">
+        <p class="eyebrow">Academy Account</p>
+        <h2 class="font-display text-3xl font-semibold text-wine">Welcome back.</h2>
+        <p class="mt-2 text-sm text-stone-500">Sign in and continue your AlgoCraft journey.</p>
+        <form id="loginForm" class="mt-7 space-y-4">
+          <input id="loginId" required type="text" placeholder="Email or Student/Employee ID" class="form-input">
+          <input id="loginPassword" required type="password" placeholder="Password" class="form-input">
+          <button class="gold-btn w-full justify-center">Sign In</button>
+        </form>
+        <p class="mt-5 text-center text-sm text-stone-500">Don't have an account? <button type="button" onclick="showSignup()" class="font-bold text-wine">Create one</button></p>
+        <p class="mt-4 text-center text-xs text-stone-400">Demo frontend authentication — ready to connect to your Oracle backend.</p>
+      </div>
+
+      <div id="authSignupView" class="hidden">
+        <p class="eyebrow">Create Account</p>
+        <h2 class="font-display text-3xl font-semibold text-wine">Join AlgoCraft.</h2>
+        <p class="mt-2 text-sm text-stone-500">Choose your academy role first.</p>
+        <div class="role-grid mt-6">
+          <button type="button" class="role-card" data-role="Student" onclick="selectRole(this)"><span>🎓</span><b>Student</b><small>Learning & results</small></button>
+          <button type="button" class="role-card" data-role="Teacher" onclick="selectRole(this)"><span>👨‍🏫</span><b>Teacher</b><small>Classes & students</small></button>
+          <button type="button" class="role-card" data-role="System Admin" onclick="selectRole(this)"><span>🛠️</span><b>System Admin</b><small>Academy management</small></button>
+        </div>
+        <form id="signupForm" class="mt-5 space-y-4">
+          <input id="signupName" required type="text" placeholder="Full name" class="form-input">
+          <input id="signupEmail" required type="email" placeholder="Email address" class="form-input">
+          <input id="signupPassword" required type="password" placeholder="Create password" class="form-input">
+          <button class="gold-btn w-full justify-center">Create Account</button>
+        </form>
+        <p class="mt-5 text-center text-sm text-stone-500">Already registered? <button type="button" onclick="showLoginView()" class="font-bold text-wine">Sign in</button></p>
+      </div>
     </div>
+  </div>
+
+  <!-- ROLE DASHBOARD -->
+  <div id="dashboard" class="dashboard hidden">
+    <aside class="dashboard-sidebar">
+      <div class="dash-brand"><div class="logo-mark"><svg viewBox="0 0 40 40" width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 10 L28 30 M20 10 L12 30 M15.5 23 H24.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="20" cy="10" r="1.6" fill="currentColor"/></svg></div><div><b>ALGOCRAFT</b><small>COMPETITIVE PROGRAMMING</small></div></div>
+      <div class="dash-user"><div id="dashAvatar" class="dash-avatar">S</div><div><b id="dashName">User</b><small id="dashRole">Student</small></div></div>
+      <nav id="dashNav" class="dash-nav"></nav>
+      <button onclick="logout()" class="dash-logout">↪ &nbsp; Logout</button>
+    </aside>
+    <main class="dashboard-main">
+      <div class="dash-topbar"><div><p class="eyebrow">AlgoCraft Portal</p><h1 id="dashTitle">Overview</h1></div><button onclick="logout()" class="dashboard-close">×</button></div>
+      <div id="dashContent"></div>
+    </main>
   </div>
 
   <div id="toast" class="toast"></div>
   <button id="topBtn" class="top-btn">↑</button>
-  <script src="data.js"></script>
-  <script src="content-store.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

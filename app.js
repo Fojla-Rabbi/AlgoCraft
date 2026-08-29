@@ -7,65 +7,153 @@ const loginModal = document.getElementById('loginModal');
 const dashboard = document.getElementById('dashboard');
 
 window.addEventListener('scroll', () => {
-  if (navbar) navbar.classList.toggle('scrolled', window.scrollY > 30);
-  if (topBtn) topBtn.style.display = window.scrollY > 500 ? 'block' : 'none';
+  navbar.classList.toggle('scrolled', window.scrollY > 30);
+  topBtn.style.display = window.scrollY > 500 ? 'block' : 'none';
 });
-topBtn?.addEventListener('click', () => window.scrollTo({top: 0, behavior:'smooth'}));
-menuBtn?.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+topBtn.addEventListener('click', () => window.scrollTo({top: 0, behavior:'smooth'}));
+menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
 document.querySelectorAll('#mobileMenu a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.add('hidden')));
 
 function openLogin() {
-  if (!loginModal) return;
+  if (dashboard && !dashboard.classList.contains('hidden')) return;
   loginModal.classList.remove('hidden');
   document.body.style.overflow = 'hidden';
-  setTimeout(() => document.getElementById('loginId')?.focus(), 50);
+  showLoginView();
 }
 function closeLogin() {
-  if (!loginModal) return;
   loginModal.classList.add('hidden');
   document.body.style.overflow = '';
 }
-if (loginModal) loginModal.addEventListener('click', e => { if (e.target === loginModal) closeLogin(); });
+loginModal.addEventListener('click', e => { if (e.target === loginModal) closeLogin(); });
 
-const ADMIN_EMAIL = 'admin@algocraft.dev';
-const ADMIN_PASSWORD = 'admin123';
+function showSignup() {
+  document.getElementById('authLoginView').classList.add('hidden');
+  document.getElementById('authSignupView').classList.remove('hidden');
+}
+function showLoginView() {
+  document.getElementById('authSignupView').classList.add('hidden');
+  document.getElementById('authLoginView').classList.remove('hidden');
+}
+let selectedRole = '';
+function selectRole(button) {
+  selectedRole = button.dataset.role;
+  document.querySelectorAll('.role-card').forEach(c => c.classList.remove('selected'));
+  button.classList.add('selected');
+}
 
-document.getElementById('loginForm')?.addEventListener('submit', e => {
+document.getElementById('signupForm').addEventListener('submit', e => {
   e.preventDefault();
-  const email = document.getElementById('loginId').value.trim().toLowerCase();
-  const password = document.getElementById('loginPassword').value;
-  if (email !== ADMIN_EMAIL || password !== ADMIN_PASSWORD) {
-    showToast('Invalid administrator credentials.');
+  if (!selectedRole) {
+    showToast('Please select Student, Teacher or System Admin.');
     return;
   }
-  sessionStorage.setItem('algocraftAdminSession', '1');
-  closeLogin();
-  window.location.href = 'admin.html';
+  const user = {
+    name: document.getElementById('signupName').value.trim(),
+    email: document.getElementById('signupEmail').value.trim(),
+    password: document.getElementById('signupPassword').value,
+    role: selectedRole
+  };
+  localStorage.setItem('algocraftUser', JSON.stringify(user));
+  document.getElementById('loginId').value = user.email;
+  document.getElementById('loginPassword').value = '';
+  showLoginView();
+  showToast('Account created. Please sign in to continue.');
 });
 
-function escapeHtml(s) { return String(s ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m])); }
+document.getElementById('loginForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const stored = JSON.parse(localStorage.getItem('algocraftUser') || 'null');
+  const id = document.getElementById('loginId').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  if (!stored) {
+    showToast('No demo account found. Please create an account first.');
+    showSignup();
+    return;
+  }
+  if ((id !== stored.email) && (id !== stored.name)) {
+    showToast('Email/ID does not match the registered account.');
+    return;
+  }
+  if (password !== stored.password) {
+    showToast('Incorrect password.');
+    return;
+  }
+  closeLogin();
+  openDashboard(stored);
+});
 
-function renderPublicPrograms() {
-  const grid = document.getElementById('programGrid');
-  if (!grid || !window.AlgoCraftContent) return;
-  const content = AlgoCraftContent.load();
-  const levels = content.levels.filter(l => l.published !== false);
-  grid.innerHTML = levels.map(level => {
-    const topics = level.topics.map(slug => content.topics.find(t => t.slug === slug)).filter(Boolean);
-    const preview = topics.slice(0, 5).map(t => t.title).join(', ');
-    return `<article class="program-card">
-      <div class="program-img" style="background-image:url('${escapeHtml(level.banner || '')}')"></div>
-      <div class="p-6">
-        <span class="tag">${escapeHtml(level.name)}</span>
-        <h3>${escapeHtml(level.label)}</h3>
-        <p>${escapeHtml(preview || level.description || 'Explore the topics in this learning level.')}</p>
-        <div class="program-meta"><span>${topics.length} Topics</span><span>${escapeHtml(level.tier)}</span></div>
-        <button onclick="window.location.href='level.html?level=${encodeURIComponent(level.id)}'">View Details →</button>
-      </div>
-    </article>`;
-  }).join('') || '<div class="dash-panel"><h3>No published programs</h3><p>The administrator has not published any programs yet.</p></div>';
+const dashboardData = {
+  "Student": {
+    items: ["Overview","Attendance","Exams & Results","Payments","Profile"],
+    title: "Student Dashboard",
+    cards: [["Attendance","92%","Good standing"],["Upcoming Exam","Bengali Music Theory","18 Aug 2026"],["Pending Payment","৳ 2,500","Due 15 Aug"]]
+  },
+  "Teacher": {
+    items: ["Overview","My Batches","Student Attendance","Classes & Schedule","Profile"],
+    title: "Teacher Dashboard",
+    cards: [["My Batches","4","Active batches"],["Today's Classes","3","Scheduled sessions"],["Students","86","Across your batches"]]
+  },
+  "System Admin": {
+    items: ["Overview","User Management","Programs & Batches","Payments & Reports","System Settings"],
+    title: "System Admin Dashboard",
+    cards: [["Students","1,500+","Registered learners"],["Teachers","85+","Academy faculty"],["Programs","25+","Active programs"]]
+  }
+};
+
+function openDashboard(user) {
+  dashboard.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('dashName').textContent = user.name;
+  document.getElementById('dashRole').textContent = user.role;
+  document.getElementById('dashAvatar').textContent = user.name.charAt(0).toUpperCase();
+  const data = dashboardData[user.role] || dashboardData.Student;
+  document.getElementById('dashTitle').textContent = data.title;
+  const nav = document.getElementById('dashNav');
+  nav.innerHTML = data.items.map((item,i) =>
+    `<button class="${i===0?'active':''}" onclick="renderDash('${item.replace(/'/g,"\\'")}', '${user.role}')">${dashIcon(item)}<span>${item}</span></button>`
+  ).join('');
+  renderDash(data.items[0], user.role);
 }
-renderPublicPrograms();
+function dashIcon(item) {
+  const icons = {"Overview":"⌂","Attendance":"✓","Exams & Results":"▤","Payments":"৳","Profile":"◯","My Batches":"▦","Student Attendance":"✓","Classes & Schedule":"◷","User Management":"♙","Programs & Batches":"◆","Payments & Reports":"৳","System Settings":"⚙"};
+  return icons[item] || "•";
+}
+function renderDash(page, role) {
+  document.querySelectorAll('#dashNav button').forEach(b => b.classList.toggle('active', b.textContent.trim().endsWith(page)));
+  document.getElementById('dashTitle').textContent = page;
+  const user = JSON.parse(localStorage.getItem('algocraftUser') || '{"name":"User","role":"Student"}');
+  const content = document.getElementById('dashContent');
+  if (page === 'Overview') {
+    const cards = dashboardData[role].cards;
+    content.innerHTML = `
+      <div class="dash-welcome"><div><span>WELCOME BACK</span><h2>${escapeHtml(user.name)}</h2><p>Your ${role.toLowerCase()} workspace is ready.</p></div><div class="dash-seal">✦</div></div>
+      <div class="dash-stat-grid">${cards.map(c=>`<div class="dash-stat-card"><small>${c[0]}</small><strong>${c[1]}</strong><span>${c[2]}</span></div>`).join('')}</div>
+      <div class="dash-panel"><h3>AlgoCraft</h3><p>Stay connected with your problem-solving journey. Use the menu to access ${role === 'Student' ? 'attendance, examinations, payments and profile information' : role === 'Teacher' ? 'batches, attendance, schedules and student information' : 'users, programs, payments, reports and system settings'}.</p></div>`;
+  } else {
+    const descriptions = {
+      "Attendance":"Review attendance records and monthly participation.",
+      "Exams & Results":"View examinations, marks, results and academic progress.",
+      "Payments":"Check fee payments, transaction history and outstanding balances.",
+      "Profile":"Manage your academy profile and account information.",
+      "My Batches":"View assigned batches, programs and enrolled students.",
+      "Student Attendance":"Record and review student attendance for your batches.",
+      "Classes & Schedule":"Check upcoming classes, rooms and teaching schedules.",
+      "User Management":"Manage students, teachers and system users.",
+      "Programs & Batches":"Create and manage cultural programs, batches and schedules.",
+      "Payments & Reports":"Review fee transactions and academy financial reports.",
+      "System Settings":"Configure academy-wide settings and administrative preferences."
+    };
+    content.innerHTML = `<div class="dash-panel large"><div class="panel-icon">${dashIcon(page)}</div><h2>${page}</h2><p>${descriptions[page] || 'Manage this area of the AlgoCraft platform.'}</p><div class="demo-table"><div><b>Module status</b><span>Ready for Oracle backend</span></div><div><b>Access level</b><span>${role}</span></div><div><b>Next step</b><span>Connect API & database</span></div></div></div>`;
+  }
+}
+function escapeHtml(s) { return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m])); }
+
+function logout() {
+  dashboard.classList.add('hidden');
+  document.body.style.overflow = '';
+  window.scrollTo({top:0, behavior:'smooth'});
+  showToast('You have been logged out.');
+}
 
 document.getElementById('newsletter').addEventListener('submit', e => {
   e.preventDefault();
