@@ -7,6 +7,14 @@ const loginModal = document.getElementById('loginModal');
 const dashboard = document.getElementById('dashboard');
 const adminModal = document.getElementById('adminModal');
 
+// Surface any unexpected JS error as a visible toast instead of failing
+// silently — if something breaks mid-render, you'll see it instead of
+// just landing in a confusing half-open state.
+window.addEventListener('error', e => {
+  console.error('AlgoCraft error:', e.error || e.message);
+  showToast('Something went wrong: ' + (e.message || 'unknown error') + ' — please check the console.');
+});
+
 window.addEventListener('scroll', () => {
   navbar.classList.toggle('scrolled', window.scrollY > 30);
   topBtn.style.display = window.scrollY > 500 ? 'block' : 'none';
@@ -44,12 +52,16 @@ function renderHomeLevels() {
 renderHomeLevels();
 
 /* ---------------- AUTH (admin only) ---------------- */
+function isDashboardOpen() { return dashboard.style.display === 'flex'; }
+
 function openLogin() {
-  if (dashboard && !dashboard.classList.contains('hidden')) return;
+  if (isDashboardOpen()) return;
+  loginModal.style.display = 'grid';
   loginModal.classList.remove('hidden');
   document.body.style.overflow = 'hidden';
 }
 function closeLogin() {
+  loginModal.style.display = 'none';
   loginModal.classList.add('hidden');
   document.body.style.overflow = '';
 }
@@ -69,6 +81,8 @@ document.getElementById('loginForm').addEventListener('submit', e => {
 });
 
 function logout() {
+  closeAdminModal();
+  dashboard.style.display = 'none';
   dashboard.classList.add('hidden');
   document.body.style.overflow = '';
   window.scrollTo({top:0, behavior:'smooth'});
@@ -77,6 +91,7 @@ function logout() {
 
 /* ---------------- ADMIN DASHBOARD ---------------- */
 function openDashboard() {
+  dashboard.style.display = 'flex';
   dashboard.classList.remove('hidden');
   document.body.style.overflow = 'hidden';
   const admin = AlgoCraftDB.getAdmin();
@@ -326,13 +341,23 @@ function confirmDeleteSection(slug, index) {
 }
 
 function openAdminModal() {
-  // Inline z-index as a safeguard: guarantees the modal sits above the
-  // admin dashboard even if a cached/stale styles.css is being served.
+  // Deterministic, cache/cascade-proof visibility control: inline styles
+  // always win over any stylesheet, so this can't be affected by CSS
+  // load order or a stale cached stylesheet.
+  //
+  // Also force the dashboard to stay visible here — this guarantees the
+  // dashboard can never be the reason the modal appears to sit over the
+  // plain site instead of over the dashboard, regardless of what else
+  // is going on.
+  dashboard.style.display = 'flex';
+  dashboard.classList.remove('hidden');
   adminModal.style.zIndex = '9999';
+  adminModal.style.display = 'grid';
   adminModal.classList.remove('hidden');
 }
 
 function closeAdminModal() {
+  adminModal.style.display = 'none';
   adminModal.classList.add('hidden');
   adminModal.style.zIndex = '';
   document.getElementById('adminModalForm').innerHTML = '';
