@@ -1,11 +1,12 @@
 // AlgoCraft Admin CMS — frontend prototype with localStorage persistence.
 const $ = id => document.getElementById(id);
 const contentApi = window.AlgoCraftContent;
+const HOME_URL = document.body.dataset.home || 'index.html';
 let content = contentApi.load();
 let currentPage = 'Overview';
 
 if (sessionStorage.getItem('algocraftAdminSession') !== '1') {
-  window.location.href = 'index.html';
+  window.location.href = HOME_URL;
   throw new Error('Admin session required');
 }
 
@@ -22,7 +23,13 @@ function levelById(id) { return content.levels.find(l => String(l.id) === String
 function topicBySlug(slug) { return content.topics.find(t => t.slug === slug); }
 function nextLevelId() { return String(content.levels.reduce((m,l)=>Math.max(m,Number(l.id)||0),0)+1); }
 function closeEditor() { $('editorModal').classList.add('hidden'); document.body.style.overflow=''; }
-function openEditor(html, onReady) { $('editorBody').innerHTML=html; $('editorModal').classList.remove('hidden'); document.body.style.overflow='hidden'; if(onReady) onReady(); }
+function openEditor(html, onReady) {
+  $('editorBody').innerHTML = html;
+  $('editorModal').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+  if (onReady) onReady();
+  requestAnimationFrame(() => $('editorBody').querySelector('input, textarea, select')?.focus());
+}
 
 function renderNav() {
   $('adminNav').innerHTML = navItems.map(([label,icon]) => `<button class="${currentPage===label?'active':''}" data-page="${label}"><i>${icon}</i><span>${label}</span></button>`).join('');
@@ -64,7 +71,7 @@ function openLevelEditor(id='') {
     <label>DESCRIPTION<textarea id="fLevelDescription" class="form-input editor-textarea">${esc(l.description)}</textarea></label>
     <label class="editor-check"><input id="fLevelPublished" type="checkbox" ${l.published!==false?'checked':''}> Published on public site</label>
     <div class="editor-section"><div class="editor-section-head"><b>TOPICS IN THIS LEVEL</b><span>Select topics to show in order.</span></div><select id="fLevelTopics" class="form-input" multiple size="6">${topicOptions}</select><small>Hold Ctrl/Cmd to select multiple topics. Existing selections are restored automatically.</small></div>
-    <div class="editor-actions"><button type="button" class="secondary-btn" onclick="closeEditor()">Cancel</button><button class="admin-primary">${existing?'Save Changes':'Create Level'}</button></div></form>`,()=>{
+    <div class="editor-actions"><button type="button" class="secondary-btn" onclick="closeEditor()">Cancel</button><button type="submit" class="admin-primary">${existing?'Save Changes':'Create Level'}</button></div></form>`,()=>{
       const sel=$('fLevelTopics'); (l.topics||[]).forEach(slug=>{const o=[...sel.options].find(x=>x.value===slug);if(o)o.selected=true;});
       $('levelForm').onsubmit=e=>{e.preventDefault(); saveLevel(existing?.id||null);};
       $('fLevelName').addEventListener('input',()=>{if(!existing)$('fLevelSlug').value=contentApi.slugify($('fLevelName').value);});
@@ -90,7 +97,7 @@ function openTopicEditor(slug='') {
     <div class="editor-grid"><label>TITLE<input id="fTopicTitle" class="form-input" required value="${esc(t.title)}"></label><label>SLUG<input id="fTopicSlug" class="form-input" required value="${esc(t.slug)}"></label><label>BADGE LABEL<input id="fTopicBadge" class="form-input" value="${esc(t.badgeLabel||'')}"></label><label>LEVEL<select id="fTopicLevel" class="form-input">${levelOptions}</select></label></div>
     <label>DESCRIPTION<textarea id="fTopicIntro" class="form-input editor-textarea">${esc(t.intro||'')}</textarea></label>
     <div class="editor-section"><div class="editor-section-head"><b>LESSON CONTENT</b><button type="button" class="small-gold" onclick="addSectionField()">+ Add section</button></div><div id="sectionFields">${(t.sections||[]).map((s,i)=>sectionField(s,i)).join('')}</div></div>
-    <div class="editor-actions"><button type="button" class="secondary-btn" onclick="closeEditor()">Cancel</button><button class="admin-primary">${existing?'Save Changes':'Create Topic'}</button></div></form>`,()=>{
+    <div class="editor-actions"><button type="button" class="secondary-btn" onclick="closeEditor()">Cancel</button><button type="submit" class="admin-primary">${existing?'Save Changes':'Create Topic'}</button></div></form>`,()=>{
       $('topicForm').onsubmit=e=>{e.preventDefault();saveTopic(existing?.slug||null);};
       $('fTopicTitle').addEventListener('input',()=>{if(!existing)$('fTopicSlug').value=contentApi.slugify($('fTopicTitle').value);});
       $('fTopicLevel').addEventListener('change',()=>{$('fTopicBadge').value=`LEVEL ${$('fTopicLevel').value}`;});
@@ -116,6 +123,6 @@ function resetAllContent(){if(!confirm('Reset all programs and topics to the ori
 
 $('editorClose').onclick=closeEditor;
 $('editorModal').onclick=e=>{if(e.target===$('editorModal'))closeEditor();};
-$('adminLogout').onclick=()=>{sessionStorage.removeItem('algocraftAdminSession');window.location.href='index.html';};
-$('adminClose').onclick=()=>window.location.href='index.html';
+$('adminLogout').onclick=()=>{sessionStorage.removeItem('algocraftAdminSession');window.location.href=HOME_URL;};
+$('adminClose').onclick=()=>closeEditor();
 render();
