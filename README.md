@@ -1,52 +1,26 @@
-# Shurangan — A Cultural Academy
+# AlgoCraft — Competitive Programming Learning Platform
 
-Updated frontend preserving the original wine / burgundy / gold design and overall homepage layout.
+## Admin-only content management
+The project now uses **one login: Administrator only**. There are no student/teacher signup flows.
 
-## Cultural Academy Content
-- Rabindra Sangeet
-- Nazrul Geeti
-- Bangladeshi Folk Music
-- Bangladeshi Folk & Classical Dance
-- Recitation & Theatre
-- Visual Arts
+### Demo admin credentials
+- Email: `admin@algocraft.dev`
+- Password: `admin123`
 
-## Authentication Flow
-**Sign Up → Select Role → Create Account → Login → Automatic Dashboard**
+After login, the admin is taken to `admin.html`.
 
-Roles:
-- Student
-- Teacher
-- System Admin
+### Admin capabilities
+- Create, edit, delete and publish/unpublish Levels (programs).
+- Add/update a program banner image.
+- Create, edit and delete Topics.
+- Upload a topic cover image from the browser or use an image URL.
+- Edit lesson description, badge, level and sections.
+- Reorder topic membership inside a level with multi-select.
+- Reset the demo content to the original dataset.
 
-Demo accounts are stored in the browser's localStorage. This is frontend-only and can be replaced with the Oracle/API authentication later.
+All content changes are stored in browser `localStorage` for this frontend prototype and are immediately reflected on the public homepage, level pages and lesson pages.
 
-## Role Dashboards
-
-### Student
-- Overview
-- Attendance
-- Exams & Results
-- Payments
-- Profile
-
-### Teacher
-- Overview
-- My Batches
-- Student Attendance
-- Classes & Schedule
-- Profile
-
-### System Admin
-- Overview
-- User Management
-- Programs & Batches
-- Payments & Reports
-- System Settings
+> Important: client-side login/localStorage is only a prototype. For real security, the admin login and CRUD operations must be moved behind an authenticated server/API and database.
 
 ## Run
-Open `index.html` directly in a browser, or use VS Code Live Server.
-
-## Files
-- `index.html` — homepage, authentication UI and dashboards
-- `styles.css` — original styling plus responsive dashboard/auth styles
-- `app.js` — navigation, authentication demo, role dashboards, toast messages
+Open `index.html` directly or use VS Code Live Server.
