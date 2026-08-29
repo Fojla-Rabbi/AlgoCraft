@@ -181,7 +181,7 @@ function openLevelForm(id) {
     showAdminLevels();
     renderHomeLevels();
   };
-  adminModal.classList.remove('hidden');
+  openAdminModal();
 }
 function confirmDeleteLevel(id) {
   const lvl = AlgoCraftDB.getLevel(id);
@@ -249,7 +249,7 @@ function openTopicForm(levelId, slug) {
     }
     renderHomeLevels();
   };
-  adminModal.classList.remove('hidden');
+  openAdminModal();
 }
 function confirmDeleteTopic(slug, levelId) {
   const topic = AlgoCraftDB.getTopic(slug);
@@ -316,7 +316,7 @@ function openSectionForm(slug, index) {
     closeAdminModal();
     showAdminContent(slug);
   };
-  adminModal.classList.remove('hidden');
+  openAdminModal();
 }
 function confirmDeleteSection(slug, index) {
   if (!confirm('Delete this content section? This can\'t be undone.')) return;
@@ -325,8 +325,16 @@ function confirmDeleteSection(slug, index) {
   showAdminContent(slug);
 }
 
+function openAdminModal() {
+  // Inline z-index as a safeguard: guarantees the modal sits above the
+  // admin dashboard even if a cached/stale styles.css is being served.
+  adminModal.style.zIndex = '9999';
+  adminModal.classList.remove('hidden');
+}
+
 function closeAdminModal() {
   adminModal.classList.add('hidden');
+  adminModal.style.zIndex = '';
   document.getElementById('adminModalForm').innerHTML = '';
 }
 adminModal.addEventListener('click', e => { if (e.target === adminModal) closeAdminModal(); });
