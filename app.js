@@ -53,7 +53,7 @@ document.getElementById('signupForm').addEventListener('submit', e => {
     password: document.getElementById('signupPassword').value,
     role: selectedRole
   };
-  localStorage.setItem('shuranganUser', JSON.stringify(user));
+  localStorage.setItem('algocraftUser', JSON.stringify(user));
   document.getElementById('loginId').value = user.email;
   document.getElementById('loginPassword').value = '';
   showLoginView();
@@ -62,7 +62,7 @@ document.getElementById('signupForm').addEventListener('submit', e => {
 
 document.getElementById('loginForm').addEventListener('submit', e => {
   e.preventDefault();
-  const stored = JSON.parse(localStorage.getItem('shuranganUser') || 'null');
+  const stored = JSON.parse(localStorage.getItem('algocraftUser') || 'null');
   const id = document.getElementById('loginId').value.trim();
   const password = document.getElementById('loginPassword').value;
   if (!stored) {
@@ -121,14 +121,14 @@ function dashIcon(item) {
 function renderDash(page, role) {
   document.querySelectorAll('#dashNav button').forEach(b => b.classList.toggle('active', b.textContent.trim().endsWith(page)));
   document.getElementById('dashTitle').textContent = page;
-  const user = JSON.parse(localStorage.getItem('shuranganUser') || '{"name":"User","role":"Student"}');
+  const user = JSON.parse(localStorage.getItem('algocraftUser') || '{"name":"User","role":"Student"}');
   const content = document.getElementById('dashContent');
   if (page === 'Overview') {
     const cards = dashboardData[role].cards;
     content.innerHTML = `
       <div class="dash-welcome"><div><span>WELCOME BACK</span><h2>${escapeHtml(user.name)}</h2><p>Your ${role.toLowerCase()} workspace is ready.</p></div><div class="dash-seal">✦</div></div>
       <div class="dash-stat-grid">${cards.map(c=>`<div class="dash-stat-card"><small>${c[0]}</small><strong>${c[1]}</strong><span>${c[2]}</span></div>`).join('')}</div>
-      <div class="dash-panel"><h3>Shurangan Academy</h3><p>Stay connected with your cultural learning journey. Use the menu to access ${role === 'Student' ? 'attendance, examinations, payments and profile information' : role === 'Teacher' ? 'batches, attendance, schedules and student information' : 'users, programs, payments, reports and system settings'}.</p></div>`;
+      <div class="dash-panel"><h3>AlgoCraft</h3><p>Stay connected with your problem-solving journey. Use the menu to access ${role === 'Student' ? 'attendance, examinations, payments and profile information' : role === 'Teacher' ? 'batches, attendance, schedules and student information' : 'users, programs, payments, reports and system settings'}.</p></div>`;
   } else {
     const descriptions = {
       "Attendance":"Review attendance records and monthly participation.",
@@ -143,7 +143,7 @@ function renderDash(page, role) {
       "Payments & Reports":"Review fee transactions and academy financial reports.",
       "System Settings":"Configure academy-wide settings and administrative preferences."
     };
-    content.innerHTML = `<div class="dash-panel large"><div class="panel-icon">${dashIcon(page)}</div><h2>${page}</h2><p>${descriptions[page] || 'Manage this area of the Shurangan academy system.'}</p><div class="demo-table"><div><b>Module status</b><span>Ready for Oracle backend</span></div><div><b>Access level</b><span>${role}</span></div><div><b>Next step</b><span>Connect API & database</span></div></div></div>`;
+    content.innerHTML = `<div class="dash-panel large"><div class="panel-icon">${dashIcon(page)}</div><h2>${page}</h2><p>${descriptions[page] || 'Manage this area of the AlgoCraft platform.'}</p><div class="demo-table"><div><b>Module status</b><span>Ready for Oracle backend</span></div><div><b>Access level</b><span>${role}</span></div><div><b>Next step</b><span>Connect API & database</span></div></div></div>`;
   }
 }
 function escapeHtml(s) { return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m])); }
@@ -158,7 +158,7 @@ function logout() {
 document.getElementById('newsletter').addEventListener('submit', e => {
   e.preventDefault();
   e.target.reset();
-  showToast('Thank you! You are subscribed to Shurangan updates.');
+  showToast('Thank you! You are subscribed to AlgoCraft updates.');
 });
 
 function showToast(message) {

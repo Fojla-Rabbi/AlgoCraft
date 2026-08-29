@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AlgoCraft | Level</title>
+  <meta name="description" content="AlgoCraft — pick a topic to start learning.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='20' r='18' fill='%235b0712'/%3E%3Cpath d='M20 10 L28 30 M20 10 L12 30 M15.5 23 H24.5' stroke='%23d9a441' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Ccircle cx='20' cy='10' r='1.6' fill='%23d9a441'/%3E%3C/svg%3E">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { wine:'#5b0712', burgundy:'#760b18', gold:'#d9a441', cream:'#faf7f0', ink:'#211817' },
+          fontFamily: { display:['Georgia','serif'], sans:['Inter','system-ui','sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-cream text-ink">
+
+  <header class="learn-topbar sticky top-0 z-30">
+    <div class="mx-auto flex max-w-5xl items-center justify-between px-5 py-4 lg:px-0">
+      <a href="index.html" class="flex items-center gap-3">
+        <div class="logo-mark logo-mark--dark">
+          <svg viewBox="0 0 40 40" width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 10 L28 30 M20 10 L12 30 M15.5 23 H24.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="20" cy="10" r="1.6" fill="currentColor"/>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-name">ALGOCRAFT</div>
+          <div class="brand-tag">COMPETITIVE PROGRAMMING</div>
+        </div>
+      </a>
+      <a href="index.html" class="back-link">← Home</a>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-5xl px-5 py-14 lg:px-0">
+    <div class="level-hero">
+      <p class="eyebrow">Learning Path</p>
+      <h1 id="levelHeading">Level</h1>
+      <p id="levelDesc"></p>
+    </div>
+
+    <div id="topicList" class="mt-12 grid gap-5"></div>
+  </main>
+
+  <footer class="border-t border-[#eee3da] py-10 text-center text-xs text-[#a0928c]">© 2026 AlgoCraft. All rights reserved.</footer>
+
+  <script src="data.js"></script>
+  <script src="learn.js"></script>
+</body>
+</html>
