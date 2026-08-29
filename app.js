@@ -28,8 +28,10 @@ function renderHomeLevels() {
     const level = AlgoCraftDB.getLevel(id);
     const topics = AlgoCraftDB.getTopicsForLevel(id);
     const desc = topics.length ? topics.map(t => escapeHtml(t.title)).join(', ') : 'Topics coming soon.';
+    const imgStyle = level.image ? ` style="background-image:url('${escapeAttr(level.image)}')"` : '';
     return `
       <article class="program-card">
+        <div class="program-img"${imgStyle}></div>
         <div class="p-6">
           <span class="tag">${escapeHtml(level.name.toUpperCase())}</span>
           <p class="mt-4 text-sm leading-7 text-stone-600">${desc}</p>
@@ -106,8 +108,9 @@ function showAdminLevels() {
           const count = lvl.topics.length;
           return `
           <div class="admin-row">
-            <button class="admin-row-main" onclick="showAdminTopics(${id})">
-              <b>${escapeHtml(lvl.name)}</b><span>${escapeHtml(lvl.label)} · ${escapeHtml(lvl.tier)} · ${count} topic${count === 1 ? '' : 's'}</span>
+            <button class="admin-row-main admin-row-main--with-thumb" onclick="showAdminTopics(${id})">
+              <div class="admin-row-thumb"${lvl.image ? ` style="background-image:url('${escapeAttr(lvl.image)}')"` : ''}></div>
+              <div><b>${escapeHtml(lvl.name)}</b><span>${escapeHtml(lvl.label)} · ${escapeHtml(lvl.tier)} · ${count} topic${count === 1 ? '' : 's'}</span></div>
             </button>
             <div class="admin-row-actions">
               <button onclick="openLevelForm(${id})" title="Edit">✎</button>
@@ -122,6 +125,7 @@ function showAdminLevels() {
 function openLevelForm(id) {
   const editing = id !== undefined;
   const lvl = editing ? AlgoCraftDB.getLevel(id) : null;
+  const currentImage = editing ? (lvl.image || '') : '';
   document.getElementById('adminModalEyebrow').textContent = editing ? 'Edit Level' : 'Add Level';
   document.getElementById('adminModalTitle').textContent = editing ? 'Edit Level' : 'Add a New Level';
   document.getElementById('adminModalForm').innerHTML = `
@@ -132,13 +136,44 @@ function openLevelForm(id) {
       <option ${editing && lvl.tier === 'Intermediate' ? 'selected' : ''}>Intermediate</option>
       <option ${editing && lvl.tier === 'Advanced' ? 'selected' : ''}>Advanced</option>
     </select>
+    <div>
+      <label class="form-label">Level Photo</label>
+      <div id="fLevelImgPreview" class="admin-img-preview"></div>
+      <input id="fLevelImageFile" type="file" accept="image/*" class="form-input">
+      <input id="fLevelImageUrl" type="text" placeholder="...or paste an image URL" class="form-input mt-2" value="${editing && currentImage ? escapeAttr(currentImage) : ''}">
+    </div>
     <button class="gold-btn w-full justify-center">${editing ? 'Save Changes' : 'Add Level'}</button>`;
+
+  let pendingImage = currentImage;
+  const preview = document.getElementById('fLevelImgPreview');
+  const urlInput = document.getElementById('fLevelImageUrl');
+  function setPreview(url) {
+    preview.style.backgroundImage = url ? `url('${url}')` : '';
+  }
+  setPreview(pendingImage);
+  document.getElementById('fLevelImageFile').addEventListener('change', e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      pendingImage = ev.target.result;
+      urlInput.value = '';
+      setPreview(pendingImage);
+    };
+    reader.readAsDataURL(file);
+  });
+  urlInput.addEventListener('input', e => {
+    pendingImage = e.target.value.trim();
+    setPreview(pendingImage);
+  });
+
   document.getElementById('adminModalForm').onsubmit = e => {
     e.preventDefault();
     const fields = {
       name: document.getElementById('fLevelName').value.trim(),
       label: document.getElementById('fLevelLabel').value.trim(),
-      tier: document.getElementById('fLevelTier').value
+      tier: document.getElementById('fLevelTier').value,
+      image: pendingImage
     };
     if (editing) { AlgoCraftDB.updateLevel(id, fields); showToast('Level updated.'); }
     else { AlgoCraftDB.addLevel(fields); showToast('Level added.'); }

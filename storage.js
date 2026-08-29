@@ -16,7 +16,7 @@ function buildSeedDB() {
   };
   Object.keys(SEED_LEVELS).forEach(id => {
     const n = Number(id);
-    db.levels[n] = { id: n, name: SEED_LEVELS[id].name, label: SEED_LEVELS[id].label, tier: SEED_LEVELS[id].tier, topics: [...SEED_LEVELS[id].topics] };
+    db.levels[n] = { id: n, name: SEED_LEVELS[id].name, label: SEED_LEVELS[id].label, tier: SEED_LEVELS[id].tier, image: SEED_LEVELS[id].image || '', topics: [...SEED_LEVELS[id].topics] };
     if (n >= db.nextLevelId) db.nextLevelId = n + 1;
   });
   Object.keys(SEED_TOPICS).forEach(slug => {
@@ -60,9 +60,9 @@ const AlgoCraftDB = {
     return lvl.topics.map(s => DB.topics[s]).filter(Boolean);
   },
 
-  addLevel({ name, label, tier }) {
+  addLevel({ name, label, tier, image }) {
     const id = DB.nextLevelId++;
-    DB.levels[id] = { id, name, label, tier, topics: [] };
+    DB.levels[id] = { id, name, label, tier, image: image || '', topics: [] };
     saveDB();
     return id;
   },
